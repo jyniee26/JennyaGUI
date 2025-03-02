@@ -27,11 +27,11 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
     
      public static boolean logcheck(String Username, String Password ){
         
-        connectDB db = new connectDB();
+        connectDB connect = new connectDB();
          
         try{
          String que = "SELECT * FROM user WHERE Username='"+Username+"' AND Password='"+Password+"'";  
-            ResultSet resultset = db.getData(que);
+            ResultSet resultset = connect.getData(que);
         
             
             if(resultset.next()){
@@ -72,7 +72,8 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0,0,0,60));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255), 5));
+        jPanel1.setForeground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 27)); // NOI18N
@@ -119,7 +120,7 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
         });
         jPanel1.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 250, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 620, 380));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 620, 380));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/3.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
@@ -128,21 +129,23 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-
+      REGISTRATION r = new REGISTRATION ();
+        r.setVisible(true);
+        this.dispose();     
         
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 if(logcheck(Username.getText(),Password.getText())){
-              if (!ty.equals("")){ 
-            JOptionPane.showMessageDialog(null, "Account not Exist");
-        }else{ 
-                       JOptionPane.showMessageDialog(null, "Login Successfully!");
-                       if(ty.equals("Nurse")){ 
+              if (!ty.equals("Admin")){ 
+            JOptionPane.showMessageDialog(null, "Account not exist");
+        }else{
+                       JOptionPane.showMessageDialog(null, "Login Successfully!");           
+                       if(ty.equals("Staff")){ 
                            admin ad = new admin();
                 ad.setVisible(true);
                 this.dispose();
-                       } else if (ty.equals("Doctor")){
+                       } else if (ty.equals("Admin")){
                             
                            dashboard dash = new dashboard();
                 dash.setVisible(true);
@@ -151,7 +154,7 @@ if(logcheck(Username.getText(),Password.getText())){
     }//GEN-LAST:event_jButton2ActionPerformed
 }else {
                       
-            JOptionPane.showMessageDialog(null,"Invalid Account!");
+       JOptionPane.showMessageDialog(null,"Invalid Account!");     
     }
     
     }

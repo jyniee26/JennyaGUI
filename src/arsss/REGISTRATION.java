@@ -21,11 +21,11 @@ public class REGISTRATION extends javax.swing.JFrame {
 public static String mail, user;
     public boolean dupcheck(){
         
-        connectDB db = new connectDB();
+        connectDB connect = new connectDB();
          
         try{
         String que = "SELECT * FROM user WHERE Username='"+username.getText()+"' OR Email='"+email.getText()+"'";    
-            ResultSet resultset = db.getData(que);
+            ResultSet resultset = connect.getData(que);
             if(resultset.next()){
                 mail = resultset.getString("Email");
             
@@ -96,7 +96,8 @@ public static String mail, user;
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0,0,0,60));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 204, 255), 5));
+        jPanel1.setForeground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 27)); // NOI18N
@@ -178,7 +179,7 @@ public static String mail, user;
         jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, 20));
         jPanel1.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 250, 25));
 
-        usertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Doctor", "Nurse", " " }));
+        usertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Admin", "Staff", " " }));
         usertype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usertypeActionPerformed(evt);
@@ -226,9 +227,7 @@ public static String mail, user;
         String userType = usertype.getSelectedItem().toString();
         String username = userName.getText().trim();
         String password = Password.getText().trim();
-        
-        String status = (userType.equals("Doctor")) ? "active" : "pending";
- connectDB connect = new connectDB();
+       
         
         if (firstName.isEmpty()) {
     JOptionPane.showMessageDialog(null, "Please Enter your First Name!", "Error", JOptionPane.WARNING_MESSAGE);
@@ -250,30 +249,26 @@ public static String mail, user;
      
 } 
 else {
-    try {
-        if (connect.fieldExists("username", username)) {
-            JOptionPane.showMessageDialog(null, "Username already taken!", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (connect.fieldExists("Email", Email)) {
-            JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
-        } else {
-            connect.insertData("INSERT INTO `user` (firstName, lastName, Email, userType, username, password) VALUES ('"
-                    + firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "','"+ status +"')");
-            JOptionPane.showMessageDialog(null, "Registered Successfully!");
-
-            if (userType.equals("Doctor")) {
-                 LOGIN r = new LOGIN ();
-        r.setVisible(true);
-        this.dispose();  
-            } else if (userType.equals("Nurse")) {
-                 LOGIN r = new LOGIN ();
-        r.setVisible(true);
-        this.dispose();  
-            }
+    if (connect.fieldExists("username", username)) {
+        JOptionPane.showMessageDialog(null, "Username already taken!", "Error", JOptionPane.WARNING_MESSAGE);
+    } else if (connect.fieldExists("Email", Email)) {
+        JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
+    } else {
+        connect.insertData("INSERT INTO `user` (firstName, lastName, Email, userType, username, password) VALUES ('"
+                + firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "'");
+        JOptionPane.showMessageDialog(null, "Registered Successfully!");
+        
+        if (userType.equals("Admin")) {
+            LOGIN r = new LOGIN ();
+            r.setVisible(true);
+            this.dispose();
+        } else if (userType.equals("Staff")) {
+            LOGIN r = new LOGIN ();
+            r.setVisible(true);
             this.dispose();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        this.dispose();
+    }
         }
     }                                     
     {
