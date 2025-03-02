@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package arsss;
 
 import config.connectDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static javax.management.remote.JMXConnectorFactory.connect;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -24,7 +20,7 @@ public static String mail, user;
         connectDB connect = new connectDB();
          
         try{
-        String que = "SELECT * FROM user WHERE Username='"+username.getText()+"' OR Email='"+email.getText()+"'";    
+        String que = "SELECT * FROM user WHERE Username = '"+username.getText()+"' OR Email='"+email.getText()+"'";    
             ResultSet resultset = connect.getData(que);
             if(resultset.next()){
                 mail = resultset.getString("Email");
@@ -228,7 +224,7 @@ public static String mail, user;
         String username = userName.getText().trim();
         String password = Password.getText().trim();
        
-        
+      connectDB connect = new connectDB();  
         if (firstName.isEmpty()) {
     JOptionPane.showMessageDialog(null, "Please Enter your First Name!", "Error", JOptionPane.WARNING_MESSAGE);
 } else if (lastName.isEmpty()) {
@@ -249,29 +245,32 @@ public static String mail, user;
      
 } 
 else {
-    if (connect.fieldExists("username", username)) {
-        JOptionPane.showMessageDialog(null, "Username already taken!", "Error", JOptionPane.WARNING_MESSAGE);
-    } else if (connect.fieldExists("Email", Email)) {
-        JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
-    } else {
-        connect.insertData("INSERT INTO `user` (firstName, lastName, Email, userType, username, password) VALUES ('"
-                + firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "'");
-        JOptionPane.showMessageDialog(null, "Registered Successfully!");
-        
-        if (userType.equals("Admin")) {
-            LOGIN r = new LOGIN ();
-            r.setVisible(true);
-            this.dispose();
-        } else if (userType.equals("Staff")) {
-            LOGIN r = new LOGIN ();
-            r.setVisible(true);
-            this.dispose();
+        try {
+            if (connect.fieldExists("username", username)) {
+                JOptionPane.showMessageDialog(null, "Username already taken!", "Error", JOptionPane.WARNING_MESSAGE);
+            } else if (connect.fieldExists("Email", Email)) {
+                JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
+            } else {
+                connect.insertData("INSERT INTO (FirstName, LastName, Email, UserType, Username, Password) VALUES ('"
+                        + firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "'");
+                JOptionPane.showMessageDialog(null, "Registered Successfully!");
+                
+                if (userType.equals("Admin")) {
+                    LOGIN r = new LOGIN ();
+                    r.setVisible(true);
+                    this.dispose();
+                } else if (userType.equals("Staff")) {
+                    LOGIN r = new LOGIN ();
+                    r.setVisible(true);
+                    this.dispose();
+                }
+                this.dispose();
+            }   } catch (SQLException ex) {
+            Logger.getLogger(REGISTRATION.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
-    }
         }
     }                                     
-    {
+    static {
         
         
      
