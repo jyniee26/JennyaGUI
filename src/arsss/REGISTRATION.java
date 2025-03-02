@@ -251,10 +251,7 @@ else {
             } else if (connect.fieldExists("Email", Email)) {
                 JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
             } else {
-                connect.insertData("INSERT INTO (FirstName, LastName, Email, UserType, Username, Password) VALUES ('"
-                        + firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "'");
-                JOptionPane.showMessageDialog(null, "Registered Successfully!");
-                
+                connect.insertData("INSERT INTO user (FirstName, LastName, Email, UserType, Username, Password) VALUES ('"+ firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "')");
                 if (userType.equals("Admin")) {
                     LOGIN r = new LOGIN ();
                     r.setVisible(true);

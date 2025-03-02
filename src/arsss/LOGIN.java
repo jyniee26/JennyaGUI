@@ -137,7 +137,7 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 if(logcheck(Username.getText(),Password.getText())){
-              if (!ty.equals("Admin")){ 
+              if (!ty.equals("")){ 
             JOptionPane.showMessageDialog(null, "Account not exist");
         }else{
                        JOptionPane.showMessageDialog(null, "Login Successfully!");           
