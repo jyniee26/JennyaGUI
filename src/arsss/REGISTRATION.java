@@ -80,19 +80,19 @@ public static String mail, user;
         Password = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        firstname = new javax.swing.JTextField();
         userole = new javax.swing.JLabel();
+        userName = new javax.swing.JTextField();
         username = new javax.swing.JLabel();
-        userName = new javax.swing.JPasswordField();
         usertype = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
+        firstname = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0,0,0,60));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 204, 255), 5));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         jPanel1.setForeground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -143,7 +143,7 @@ public static String mail, user;
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 80, 30));
 
         jButton1.setBackground(new java.awt.Color(204, 255, 255));
         jButton1.setText("Exit");
@@ -157,23 +157,22 @@ public static String mail, user;
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 80, 30));
-
-        firstname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstnameActionPerformed(evt);
-            }
-        });
-        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 250, 25));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 80, 30));
 
         userole.setForeground(new java.awt.Color(255, 255, 255));
         userole.setText("User Type:");
         jPanel1.add(userole, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
 
+        userName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userNameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 250, 25));
+
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("User Name:");
         jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, 20));
-        jPanel1.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 250, 25));
 
         usertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Admin", "Staff", " " }));
         usertype.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +182,13 @@ public static String mail, user;
         });
         jPanel1.add(usertype, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 250, 25));
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 20));
+
+        firstname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstnameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 250, 25));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 610, 390));
 
@@ -197,12 +203,14 @@ public static String mail, user;
     }//GEN-LAST:event_lastnameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       LOGIN ssd = new LOGIN();
+       ssd.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
+    private void userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstnameActionPerformed
+    }//GEN-LAST:event_userNameActionPerformed
 
     private void usertypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertypeActionPerformed
         // TODO add your handling code here:
@@ -217,7 +225,7 @@ public static String mail, user;
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    String firstName = firstname.getText().trim();
+    String firstName = userName.getText().trim();
         String lastName = lastname.getText().trim();
         String Email = email.getText().trim();
         String userType = usertype.getSelectedItem().toString();
@@ -251,7 +259,7 @@ else {
             } else if (connect.fieldExists("Email", Email)) {
                 JOptionPane.showMessageDialog(null, "Email already used!", "Error", JOptionPane.WARNING_MESSAGE);
             } else {
-                connect.insertData("INSERT INTO user (FirstName, LastName, Email, UserType, Username, Password) VALUES ('"+ firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "')");
+                connect.insertData("INSERT INTO user (FirstName, LastName, Email, UserType, Username, Password, status) VALUES ('"+ firstName + "','" + lastName + "','" + Email + "','" + userType + "','" + username + "','" + password + "', 'Pending')");
                 if (userType.equals("Admin")) {
                     LOGIN r = new LOGIN ();
                     r.setVisible(true);
@@ -274,6 +282,10 @@ else {
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,7 +338,7 @@ else {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastname;
     private javax.swing.JLabel pass;
-    private javax.swing.JPasswordField userName;
+    private javax.swing.JTextField userName;
     private javax.swing.JLabel username;
     private javax.swing.JLabel userole;
     private javax.swing.JComboBox<String> usertype;

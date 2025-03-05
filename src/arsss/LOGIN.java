@@ -72,8 +72,8 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0,0,0,60));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255), 5));
-        jPanel1.setForeground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 27)); // NOI18N
@@ -92,7 +92,7 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Password:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
         jPanel1.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 250, 40));
 
         jButton2.setBackground(new java.awt.Color(204, 255, 255));
@@ -137,7 +137,7 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 if(logcheck(Username.getText(),Password.getText())){
-              if (!ty.equals("")){ 
+              if (ty.equals("")){ 
             JOptionPane.showMessageDialog(null, "Account not exist");
         }else{
                        JOptionPane.showMessageDialog(null, "Login Successfully!");           
