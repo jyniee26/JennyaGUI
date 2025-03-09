@@ -131,27 +131,33 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-if(logcheck(Username.getText(),Password.getText())){
-              if (!status.equals("Ative")){ 
+            if(logcheck(Username.getText(),Password.getText())){
+                
+            }
+            if (!status.equals("Ative")){ 
             JOptionPane.showMessageDialog(null, "Inactive account, contact the admin!");
-        }else{
-                       JOptionPane.showMessageDialog(null, "Login Successfully!");           
-                       if(type.equals("Admin")){                       
+            }else{
+            if(type.equals("Admin")){  
+            JOptionPane.showMessageDialog(null, "Login Successfully!");           
+                                             
                 dashboard dash = new dashboard();
                 dash.setVisible(true);
                 this.dispose();
-                       } else {
+            } else if(type.equals("Admin")){  
+            JOptionPane.showMessageDialog(null, "Login Successfully!");{
                 admin ad = new admin();
                 ad.setVisible(true);
                 this.dispose();
-                       }
+                
+            }
+             }else{
+            JOptionPane.showMessageDialog(null,"Login Failed");
+            
+        }
+            
+      }
     }//GEN-LAST:event_jButton2ActionPerformed
-}else {
-                      
-       JOptionPane.showMessageDialog(null,"log in Unsuccessfull!");     
-    }
-    
-    }
+
     private void UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsernameActionPerformed
