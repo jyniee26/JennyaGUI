@@ -23,27 +23,22 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
     }
 
 
-     public static String ty;
+     static String status;
+    static String type;
     
-     public static boolean logcheck(String Username, String Password ){
-        
+    public static boolean logcheck(String username, String password){
         connectDB connect = new connectDB();
-         
         try{
-         String que = "SELECT * FROM user WHERE Username='"+Username+"' AND Password='"+Password+"'";  
-            ResultSet resultset = connect.getData(que);
-        
-            
-            if(resultset.next()){
-            
-              ty = resultset.getString("Usertype");
-             return true;   
-            }
-            else {
+            String query = "SELECT * FROM users WHERE uname = '"+username+"' AND pname = '"+password+"'";
+            ResultSet resultSet = connect.getData(query);
+            if(resultSet.next()){
+                status = resultSet.getString("status");
+                type = resultSet.getString("userType");
+                return true;
+            }else{
                 return false;
             }
         }catch(SQLException ex){
-         
             return false;
         }
     }
@@ -76,15 +71,15 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 27)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("NSimSun", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("WELCOME TO APPOINTMENT RECORD SYSTEM");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jLabel1.setText("WELCOME TO APPOINTMENT RECORDS SYSTEM!");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 500, -1));
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 2, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("NSimSun", 2, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("LOG IN FORM:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, -1));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Username: ");
@@ -111,7 +106,7 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
                 jLabel8MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 190, 20));
 
         Username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,24 +132,23 @@ public class LOGIN extends javax.swing.JFrame {public static String mail, user;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 if(logcheck(Username.getText(),Password.getText())){
-              if (ty.equals("")){ 
-            JOptionPane.showMessageDialog(null, "Account not exist");
+              if (!status.equals("Ative")){ 
+            JOptionPane.showMessageDialog(null, "Inactive account, contact the admin!");
         }else{
                        JOptionPane.showMessageDialog(null, "Login Successfully!");           
-                       if(ty.equals("Staff")){ 
-                           admin ad = new admin();
-                ad.setVisible(true);
-                this.dispose();
-                       } else if (ty.equals("Admin")){
-                            
-                           dashboard dash = new dashboard();
+                       if(type.equals("Admin")){                       
+                dashboard dash = new dashboard();
                 dash.setVisible(true);
+                this.dispose();
+                       } else {
+                admin ad = new admin();
+                ad.setVisible(true);
                 this.dispose();
                        }
     }//GEN-LAST:event_jButton2ActionPerformed
 }else {
                       
-       JOptionPane.showMessageDialog(null,"Invalid Account!");     
+       JOptionPane.showMessageDialog(null,"log in Unsuccessfull!");     
     }
     
     }
